@@ -8,16 +8,19 @@ ser = serial.Serial(
     timeout=1
 )
 
-print("ES920LR 受信モード（Ctrl+Cで終了）")
+print("ES920LR バイナリ受信モード（Ctrl+Cで終了）")
 
 try:
     while True:
         if ser.in_waiting > 0:
             try:
-                # 改行単位で受信
-                data = ser.readline().decode('utf-8', errors='ignore').strip()
+                # 改行単位ではなく、受信可能なバイトをすべて取得
+                data = ser.read(ser.in_waiting)  # バイト列(bytes型)
+
                 if data:
-                    print(f"[受信] {data}")
+                    # バイト列を16進表示
+                    hex_str = data.hex(sep=" ").upper()
+                    print(f"[受信] HEX: {hex_str} | RAW: {data}")
             except Exception as e:
                 print(f"[受信エラー] {e}")
         time.sleep(0.1)
