@@ -3,43 +3,35 @@ import sys
 import time
 import select
 
-PC ↔ Raspberry Pi は標準的に /dev/ttyUSB0 や /dev/ttyAMA0 などを使う
-LoRaモジュール側のシリアルポートは環境に応じて書き換えてください
+LoRaモジュールのUARTデバイスを指定
 例: USBシリアル変換なら /dev/ttyUSB0
 GPIO UARTなら /dev/serial0
-SERIAL_PC = "/dev/ttyUSB0"     # PCと接続している側
-SERIAL_LORA = "/dev/serial0"   # LoRaモジュールに繋がっている側
-
+SERIAL_LORA = "/dev/serial0"
 BAUDRATE = 115200
 
 def main():
-    # シリアルポート初期化
-    ser_pc = serial.Serial(SERIAL_PC, BAUDRATE, timeout=0)
-    ser_lora = serial.Serial(SERIAL_LORA, BAUDRATE, timeout=0)
+    ser_lora = serial.Serial(SERIALLORA, BAUDRATE, timeout=1)
+    time.sleep(5)  # Arduinoの delay(5000) 相当
 
-    time.sleep(5)  # Arduinoでdelay(5000)に相当
-
-    print("Serial bridge started")
+    print("LoRa bridge started. Type something and press Enter to send.")
 
     try:
         while True:
-            # PC → LoRa
-            if ser_pc.in_waiting > 0:
-                data = ser_pc.read(ser_pc.in_waiting)
-                ser_lora.write(data)
+            # ターミナル入力があればLoRaに送信
+            rlist, , _ = select.select([sys.stdin], [], [], 0.01)
+            if rlist:
+                line = sys.stdin.readline()
+                ser_lora.write(line.encode("utf-8"))
 
-            # LoRa → PC
+            # LoRaから受信があればターミナルに出力
             if ser_lora.in_waiting > 0:
                 data = ser_lora.read(ser_lora.in_waiting)
-                ser_pc.write(data)
-
-            # CPUを占有しないように少し待つ
-            time.sleep(0.001)
+                sys.stdout.write(data.decode(errors="ignore"))
+                sys.stdout.flush()
 
     except KeyboardInterrupt:
-        print("Stopped by user")
+        print("\nStopped by user")
     finally:
-        ser_pc.close()
         ser_lora.close()
 
 
