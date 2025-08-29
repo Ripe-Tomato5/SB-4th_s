@@ -34,7 +34,7 @@ print(test)
 with open ('ファイル名.dat','wb') as f:
   f.write(test)
 
-# バイナリファイルを見やすく表示する
+# バイナリファイルを見やすく表示する(本番では要らない可能性高)
 # https://qiita.com/sho11hei12-1998/items/372f6312908db27c4486
 # https://issekinichou.wordpress.com/2019/02/27/python-binary/
 # https://note.nkmk.me/python-bin-oct-hex-int-format/
