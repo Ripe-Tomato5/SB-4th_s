@@ -52,6 +52,8 @@ class LoRa():
         msg = data[3].decode('utf-8')
         return (rssi, panid, srcid, msg)
 
+    
+
 def main():
     lr = LoRa()
     while True:
