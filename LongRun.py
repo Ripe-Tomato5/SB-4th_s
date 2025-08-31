@@ -53,7 +53,7 @@ def main():
             
             while True:
                 # LoRaに送信処理1と改行を60秒おきに送信
-                # line = "1\n"
+                line = "1\n"
                 ser_lora.write(line.encode("utf-8"))
                 print(f"Sent: {line.strip()}")
 
