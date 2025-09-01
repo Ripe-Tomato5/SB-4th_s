@@ -63,7 +63,7 @@ def main():
                 elapsed_sec = int(time.time() - start_time)
 
                 # 表示
-                print(f"Elapsed: {elapsed_sec:4d} min, LiPo: {lipo_voltage:.2f} V")
+                print(f"Elapsed: {elapsed_sec:4d} sec, LiPo: {lipo_voltage:.2f} V")
 
                 # CSV追記
                 writer.writerow([elapsed_sec, f"{lipo_voltage:.2f}"])
