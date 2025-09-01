@@ -26,10 +26,10 @@ def read_adc(channel):
     return value
 
 # ADCの基準電圧(VREF)
-VREF = 3.3
+VREF = 5
 
 # 分圧比（例：R1=20kΩ, R2=10kΩ → 1/3）
-DIV_RATIO = (20 + 10) / 10   # =3.0
+DIV_RATIO = 7.7 / 5.1   # =1.5098...
 
 # ログファイル名を日付付きにする
 date_str = datetime.now().strftime("%Y%m%d_%H%M")
@@ -52,7 +52,7 @@ def main():
             writer = csv.writer(f)
             
             while True:
-                # LoRaに送信処理1と改行を60秒おきに送信
+                # LoRaに送信処理1と改行を30秒おきに送信
                 line = "1\n"
                 ser_lora.write(line.encode("utf-8"))
                 print(f"Sent: {line.strip()}")
@@ -68,7 +68,7 @@ def main():
                 # CSV追記
                 writer.writerow([elapsed_min, f"{lipo_voltage:.2f}"])
 
-                time.sleep(60)
+                time.sleep(30)
 
     except KeyboardInterrupt:
         print("\nStopped by user")
