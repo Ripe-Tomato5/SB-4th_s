@@ -74,7 +74,7 @@ def main():
         print("\nStopped by user")
     finally:
         ser_lora.close()
-        spi.close()"""  """
+        spi.close()
         print("終了しました")
 
 
