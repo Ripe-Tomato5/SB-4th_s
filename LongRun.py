@@ -60,13 +60,13 @@ def main():
                 adc_val = read_adc(0)
                 voltage = adc_val * VREF / 4096
                 lipo_voltage = voltage * DIV_RATIO
-                elapsed_min = int((time.time() - start_time) / 60)
+                elapsed_sec = float(time.time() - start_time)
 
                 # 表示
-                print(f"Elapsed: {elapsed_min:4d} min, LiPo: {lipo_voltage:.2f} V")
+                print(f"Elapsed: {elapsed_sec:4d} min, LiPo: {lipo_voltage:.2f} V")
 
                 # CSV追記
-                writer.writerow([elapsed_min, f"{lipo_voltage:.2f}"])
+                writer.writerow([elapsed_sec, f"{lipo_voltage:.2f}"])
 
                 time.sleep(30)
 
@@ -74,7 +74,7 @@ def main():
         print("\nStopped by user")
     finally:
         ser_lora.close()
-        spi.close()
+        spi.close()"""  """
         print("終了しました")
 
 
