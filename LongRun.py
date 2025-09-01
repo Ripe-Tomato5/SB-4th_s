@@ -37,7 +37,7 @@ filename = f"lipo_log_{date_str}.csv"
 
 with open(filename, "w", newline="") as f:
     writer = csv.writer(f)
-    writer.writerow(["Elapsed Time (min)", "LiPo Voltage (V)"])
+    writer.writerow(["Elapsed Time (sec)", "LiPo Voltage (V)"])
 
 start_time = time.time()
 
