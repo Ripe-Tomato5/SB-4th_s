@@ -60,7 +60,7 @@ def main():
                 adc_val = read_adc(0)
                 voltage = adc_val * VREF / 4096
                 lipo_voltage = voltage * DIV_RATIO
-                elapsed_sec = float(time.time() - start_time)
+                elapsed_sec = int(time.time() - start_time)
 
                 # 表示
                 print(f"Elapsed: {elapsed_sec:4d} min, LiPo: {lipo_voltage:.2f} V")
