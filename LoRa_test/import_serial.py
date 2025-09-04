@@ -10,6 +10,11 @@ def main():
     ser_lora = serial.Serial(SERIAL_LORA, BAUDRATE, timeout=1)
     time.sleep(5)  # Arduino縺ｮ delay(5000) 逶ｸ蠖・
     print("LoRa bridge started. Type something and press Enter to send.")
+    time.sleep(3)
+    ser_lora.write("2".encode("ascii"))
+    time.sleep(3)
+    ser_lora.write("start".encode("ascii"))
+    
 
     try:
         while True:
