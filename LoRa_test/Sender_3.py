@@ -24,17 +24,17 @@ def main():
             rlist, _, _ = select.select([sys.stdin], [], [], 0.01)
             if rlist:
                 line = sys.stdin.readline()
-            try:
-                # 入力を2進数文字列として解釈し、必要なバイト数に変換
-                binary_data = int(line, 2).to_bytes((len(line) + 7) // 8, "big")
-                print("Sending (binary):", binary_data)
-                ser_lora.write(binary_data)
+                try:
+                    # 入力を2進数文字列として解釈し、必要なバイト数に変換
+                    binary_data = int(line, 2).to_bytes((len(line) + 7) // 8, "big")
+                    print("Sending (binary):", binary_data)
+                    ser_lora.write(binary_data)
 
-            except ValueError:
-                print("value error (example: 10101100)")
-                line = str(line).rstrip("\n") + "\r\n"
-                print("Sending:",repr(line))
-                ser_lora.write(line.encode("ascii"))
+                except ValueError:
+                    print("value error (example: 10101100)")
+                    line = str(line).rstrip("\n") + "\r\n"
+                    print("Sending:",repr(line))
+                    ser_lora.write(line.encode("ascii"))
 
             # LoRa縺九ｉ蜿嶺ｿ｡縺後≠繧後・繧ｿ繝ｼ繝溘リ繝ｫ縺ｫ蜃ｺ蜉・           
             if ser_lora.in_waiting > 0:
