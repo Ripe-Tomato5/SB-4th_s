@@ -7,7 +7,7 @@ from IPython.display import display
 img = Image.open("画像ファイル名")
 
 # 画像を表示
-display(img)
+# display(img)
 
 # jpegファイルをバイナリデータに変換、バイナリファイルを出力するプログラム
 # https://elsammit-beginnerblg.hatenablog.com/entry/2020/12/08/232627
@@ -16,6 +16,18 @@ import os
 import io
 from PIL import Image
 import numpy as np
+import pathlib
+
+#圧縮前画像が入っているファイルの中をすべて参照
+#24行目から30行目までは仮でコピーしているだけなのでまだ動かない
+
+# input_dir = "images/input" # 画像ファイルパス
+# input_list = list(pathlib.Path(input_dir).glob('**/*.jpg'))
+
+# for i in range(len(input_list)):
+#    img_file_name = str(input_list[i])
+#    img_np = np.fromfile(img_file_name, dtype=np.uint8)
+#    img = cv2.imdecode(img_np, cv2.IMREAD_COLOR)
 
 class ImgByteChange:
     def __init__(self):
@@ -28,7 +40,7 @@ class ImgByteChange:
             return ImgToByte
 
 imgByteChange = ImgByteChange()
-test = imgByteChange.ImageToByte("画像ファイル名.jpg")
+test = imgByteChange.ImageToByte("画像ファイル名.jpg") #
 print(test)
 
 with open ('ファイル名.dat','wb') as f:
