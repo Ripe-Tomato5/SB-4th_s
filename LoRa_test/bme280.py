@@ -1,5 +1,4 @@
 # https://qiita.com/pond-e/items/5b8812ad7a823d3a8390
-# このプログラムは上のサイトからコピーをしたものです（仮）
 
 #!/usr/bin/python3 -u
 # -*- coding: utf-8 -*-
@@ -201,6 +200,16 @@ f_bme280= open(fmt_name, 'w')    #書き込みファイル
 value="yyyy-mm-dd hh:mm:ss.mmmmmm, T[℃],H[%],P[hPa]"   #header行への書き込み内容
 f_bme280.write(value+"\n")   #header行をファイル出力
 
+# 高度算出のためにcalculate_altitudeを定義する 
+# https://zenn.dev/sdb_blog/articles/a93d26d943c409
+def calculate_altitude(pressure_hpa, temperature_c):
+    # 温度をケルビンに変換
+    temperature_k = temperature_c + 273.15
+    # 標高の計算
+    return ((((1010 / pressure_hpa) ** 0.1903) - 1) * temperature_k) / 0.0065
+
+altitude = calculate_altitude(pressure_hpa, temp / 100)
+
 if __name__ == '__main__':
 	#while True:
 	for _i in range(TIMES):
@@ -209,7 +218,7 @@ if __name__ == '__main__':
 			now     = time.time()     #現在時刻の取得
 			readData()
 			#ファイルへ書出し
-			value= "%s,%6.2f,%6.2f,%7.2f" % (date, temp,humi,press)      #時間、温度、湿度、気圧
+			value= "%s,%6.2f,%6.2f,%7.2f" % (date, temp,humi,press,altitude)      #時間、温度、湿度、気圧、高度
 			f_bme280 .write(value + "\n")       #ファイルを出力
 			#指定秒数の一時停止
 			sleepTime       = SAMPLING_TIME - (time.time() - now)

@@ -79,7 +79,7 @@ for row in rows:
     j = i * 16
     print("0000", format(j, 'x'), byte)
 
-# 復元可能な（と思われる）一部のバイナリデータを削除
+# 復元可能な（←未検証）一部のバイナリデータを削除
 # https://issekinichou.wordpress.com/2019/02/27/python-binary/
 
 source1 = open('ファイル名.dat', 'r+b')
