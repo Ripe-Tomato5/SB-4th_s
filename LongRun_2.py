@@ -152,7 +152,7 @@ def main():
                 # LiPo電圧測定
                 adc_val = read_adc(0)
                 voltage = adc_val * VREF / 4096
-                lipo_voltage = voltage * DIV_RATIO
+                lipo_voltage = voltage / DIV_RATIO
                 elapsed_sec = int(time.time() - start_time)
 
                 # BME280 測定
