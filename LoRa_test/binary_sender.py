@@ -10,8 +10,9 @@ img = Image.open("画像ファイル名")
 # https://tat-pytone.hatenablog.com/entry/2021/04/25/114334
 import cv2
 
-im = cv2.imread('ファイル.jpg')
-cv2.imwrite('ファイル_'+str(reduced)+'.jpg', im, [int(cv2.IMWRITE_JPEG_QUALITY), 20])
+im = cv2.imread('ファイル.jpg') #できればフルパスで
+name = "ファイル"
+cv2.imwrite(name + 'reduced.jpg', im, [int(cv2.IMWRITE_JPEG_QUALITY), 20])
 
 # 画像を表示
 # display(img)
@@ -26,7 +27,6 @@ import numpy as np
 import pathlib
 
 #圧縮前画像が入っているファイルの中をすべて参照
-#仮でコピーしているだけなのでまだ動かない
 # https://zenn.dev/k_neko3/articles/8b89b0ab1c29f8
 
 input_dir = "SB-4th_s/image" # 画像ファイルパス
