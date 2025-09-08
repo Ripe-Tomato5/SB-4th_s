@@ -1,8 +1,3 @@
-# 受信側は圧縮されたファイルを解凍する
-# https://blog.amedama.jp/entry/2018/08/01/230413
-with gzip.open('ファイル名2.dat.gz', 'rb') as fp:
-  data2 = fp.read()
-  print(data2)
 
 # データ修復用バイナリデータを作成、先ほどのバイナリデータと合体
 # # https://teratail.com/questions/329206

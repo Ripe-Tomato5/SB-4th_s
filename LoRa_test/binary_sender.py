@@ -6,6 +6,13 @@ from IPython.display import display
 # 画像を読み込む
 img = Image.open("画像ファイル名")
 
+# OpenCVを利用し画質を削減，品質(quality)=20に設定
+# https://tat-pytone.hatenablog.com/entry/2021/04/25/114334
+import cv2
+
+im = cv2.imread('ファイル.jpg')
+cv2.imwrite('ファイル_'+str(reduced)+'.jpg', im, [int(cv2.IMWRITE_JPEG_QUALITY), 20])
+
 # 画像を表示
 # display(img)
 
@@ -91,14 +98,3 @@ source1.close()
 with open('ファイル名2.dat', 'wb') as f:
   f.seek(0)
   f.write(data)
-
-input()
-
-# gzipを使いバイナリデータを圧縮して送信
-# https://blog.amedama.jp/entry/2018/08/01/230413
-source2 = open('ファイル名2.dat', 'r+b')
-data2 = source2.read()
-source2.close()
-import gzip
-with gzip.open('ファイル名2.dat.gz', 'wb') as fp:
-  fp.write(data2)
