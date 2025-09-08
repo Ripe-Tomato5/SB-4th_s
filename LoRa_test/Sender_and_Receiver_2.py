@@ -3,14 +3,14 @@ import sys
 import time
 import select
 
-LoRaモジュールのUARTデバイスを指定
-例: USBシリアル変換なら /dev/ttyUSB0
-GPIO UARTなら /dev/serial0
+# LoRaモジュールのUARTデバイスを指定
+# 例: USBシリアル変換なら /dev/ttyUSB0
+#     GPIO UARTなら /dev/serial0
 SERIAL_LORA = "/dev/serial0"
 BAUDRATE = 115200
 
 def main():
-    ser_lora = serial.Serial(SERIALLORA, BAUDRATE, timeout=1)
+    ser_lora = serial.Serial(SERIAL_LORA, BAUDRATE, timeout=1)
     time.sleep(5)  # Arduinoの delay(5000) 相当
 
     print("LoRa bridge started. Type something and press Enter to send.")
@@ -18,7 +18,7 @@ def main():
     try:
         while True:
             # ターミナル入力があればLoRaに送信
-            rlist, , _ = select.select([sys.stdin], [], [], 0.01)
+            rlist, _, _ = select.select([sys.stdin], [], [], 0.01)
             if rlist:
                 line = sys.stdin.readline()
                 ser_lora.write(line.encode("utf-8"))
@@ -35,5 +35,5 @@ def main():
         ser_lora.close()
 
 
-if name == "main":
+if __name__ == "__main__":
     main()
