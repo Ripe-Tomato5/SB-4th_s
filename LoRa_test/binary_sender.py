@@ -6,6 +6,13 @@ from IPython.display import display
 # 画像を読み込む
 img = Image.open("画像ファイル名")
 
+# OpenCVを利用し画質を削減，品質(quality)=20に設定
+# https://tat-pytone.hatenablog.com/entry/2021/04/25/114334
+import cv2
+
+im = cv2.imread('ファイル.jpg')
+cv2.imwrite('ファイル_'+str(reduced)+'.jpg', im, [int(cv2.IMWRITE_JPEG_QUALITY), 20])
+
 # 画像を表示
 # display(img)
 
@@ -19,15 +26,16 @@ import numpy as np
 import pathlib
 
 #圧縮前画像が入っているファイルの中をすべて参照
-#24行目から30行目までは仮でコピーしているだけなのでまだ動かない
+#仮でコピーしているだけなのでまだ動かない
+# https://zenn.dev/k_neko3/articles/8b89b0ab1c29f8
 
-# input_dir = "images/input" # 画像ファイルパス
-# input_list = list(pathlib.Path(input_dir).glob('**/*.jpg'))
+input_dir = "SB-4th_s/image" # 画像ファイルパス
+input_list = list(pathlib.Path(input_dir).glob('**/*.jpg'))
 
-# for i in range(len(input_list)):
-#    img_file_name = str(input_list[i])
-#    img_np = np.fromfile(img_file_name, dtype=np.uint8)
-#    img = cv2.imdecode(img_np, cv2.IMREAD_COLOR)
+for i in range(len(input_list)):
+   img_file_name = str(input_list[i])
+   img_np = np.fromfile(img_file_name, dtype=np.uint8)
+   img = cv2.imdecode(img_np, cv2.IMREAD_COLOR)
 
 class ImgByteChange:
     def __init__(self):
@@ -43,8 +51,12 @@ imgByteChange = ImgByteChange()
 test = imgByteChange.ImageToByte("画像ファイル名.jpg") #
 print(test)
 
-with open ('ファイル名.dat','wb') as f:
+with open ('ファイル名.dat','wb') as f: #open関数を使う際は絶対パスか相対パスでディレクトリを指定する事
   f.write(test)
+
+# カレントディレクトリ（現在のディレクトリ）確認用コード
+import os
+print(os.getcwd())
 
 # バイナリファイルを見やすく表示する(本番では要らない可能性高)
 # https://qiita.com/sho11hei12-1998/items/372f6312908db27c4486
@@ -91,14 +103,3 @@ source1.close()
 with open('ファイル名2.dat', 'wb') as f:
   f.seek(0)
   f.write(data)
-
-input()
-
-# gzipを使いバイナリデータを圧縮して送信
-# https://blog.amedama.jp/entry/2018/08/01/230413
-source2 = open('ファイル名2.dat', 'r+b')
-data2 = source2.read()
-source2.close()
-import gzip
-with gzip.open('ファイル名2.dat.gz', 'wb') as fp:
-  fp.write(data2)
