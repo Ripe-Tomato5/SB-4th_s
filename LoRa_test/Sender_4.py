@@ -66,7 +66,7 @@ def main():
             # 応答を確認（必要なら）
             receive_response()
 
-            time.sleep(0.2)  # 送信間隔
+            time.sleep(3)  # 送信間隔
 
     except KeyboardInterrupt:
         print("終了します")

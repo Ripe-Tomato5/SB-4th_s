@@ -46,10 +46,11 @@ def receive_response():
 
 def main():
     try:
+        while True:
             # 応答を確認（必要なら）
             receive_response()
 
-            time.sleep(0.2)  # 受信間隔
+            time.sleep(3)  # 受信間隔
 
     except KeyboardInterrupt:
         print("終了します")
