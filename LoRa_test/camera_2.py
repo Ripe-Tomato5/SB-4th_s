@@ -17,3 +17,4 @@ time.sleep(2)
 picam2.capture_file("photo.jpg")
 
 print("画像を photo.jpg として保存しました。")
+photo_signal = 1
