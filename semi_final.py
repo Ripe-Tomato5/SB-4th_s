@@ -17,15 +17,15 @@ Picture_name = "MurataPicture.jpg"
 picam2.capture_file(Picture_name)
 picam2.stop()
 print(f"画像を {Picture_name} として保存しました。")
-input_img = cv2.imread(f"/home/SB-4th_s/{Picture_name}")
+input_img = cv2.imread(f"{Picture_name}")
 # 画像を180度回転して上書き保存
 output_img = cv2.rotate(input_img, cv2.ROTATE_180)
-cv2.imwrite(f"/home/SB-4th_s/{Picture_name}", output_img)
+cv2.imwrite(f"{Picture_name}", output_img)
 
 
 
 # JPEGをバイナリで読み込み 
-with open(f"/home/SB-4th_s/{Picture_name}", "rb") as f:
+with open(f"{Picture_name}", "rb") as f:
     binary_data = f.read()
 print("original_data_size:", len(binary_data), "bytes")
 
@@ -33,7 +33,6 @@ print("original_data_size:", len(binary_data), "bytes")
 ascii_data = base64.b64encode(binary_data).decode("ascii")
 print("ascii_data size:", len(ascii_data), "bytes")
 
-picam2 = Picamera2()
 # カメラの準備（構成）高画素モード
 conf = picam2.create_preview_configuration(main = {"size": (2592, 1944)})
 picam2.configure(conf)
@@ -46,7 +45,7 @@ Picture_name = "MurataPicture_Royal.jpg"
 picam2.capture_file(Picture_name)
 picam2.stop()
 print(f"画像を {Picture_name} として保存しました。")
-input_img = cv2.imread(f"/home/SB-4th_s/{Picture_name}")
+input_img = cv2.imread(f"{Picture_name}")
 # 画像を180度回転して上書き保存
 output_img = cv2.rotate(input_img, cv2.ROTATE_180)
-cv2.imwrite(f"/home/SB-4th_s/{Picture_name}", output_img)
+cv2.imwrite(f"{Picture_name}", output_img)
