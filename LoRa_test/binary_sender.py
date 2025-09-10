@@ -58,7 +58,7 @@ cv2.imwrite(name + '_rereduced.jpg', im, [int(cv2.IMWRITE_JPEG_QUALITY), 20]) # 
 # 画像を表示
 # display(img)
 
-# jpegファイルをバイナリデータに変換、バイナリファイルを出力するプログラム
+# jpegファイルをバイナリデータ（バイト列）に変換、16進数を出力するプログラム
 # https://elsammit-beginnerblg.hatenablog.com/entry/2020/12/08/232627
 
 import os
@@ -132,15 +132,15 @@ print(os.getcwd())
     # j = i * 16
     # print("0000", format(j, 'x'), byte)
 
-# 復元可能な一部のバイナリデータを削除
+# 復元可能な一部のデータを削除
 # https://issekinichou.wordpress.com/2019/02/27/python-binary/
 
-source1 = open('ファイル名.dat', 'r+b')
-source1.seek(16 * 1 + 4)
-data = source1.read()
+# source1 = open('ファイル名.dat', 'r+b')
+# source1.seek(16 * 1 + 4)
+# data = source1.read()
 #print (source1)
-source1.close()
+# source1.close()
 
-with open('ファイル名2.dat', 'wb') as f:
-  f.seek(0)
-  f.write(data)
+# with open('ファイル名2.dat', 'wb') as f:
+#   f.seek(0)
+#   f.write(data)

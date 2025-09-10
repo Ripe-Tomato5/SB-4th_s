@@ -158,12 +158,17 @@ def main():
                 # BME280 測定
                 temperature, pressure, humidity = read_bme280_all()
 
+                # 高度算出
+                temperature_k = temperature + 273.15
+                altitude = ((((1010 / pressure) ** 0.1903) - 1) * temperature_k) / 0.0065
+
                 # 表示
                 print(f"Elapsed: {elapsed_sec:4d} sec, "
                       f"LiPo: {lipo_voltage:.2f} V, "
                       f"Temp: {temperature:.2f} C, "
                       f"Hum: {humidity:.2f} %, "
-                      f"Pres: {pressure:.2f} hPa")
+                      f"Pres: {pressure:.2f} hPa, "
+                      f"Alt: {altitude:} m ")
 
                 # CSV保存（強制書き込み）
                 writer.writerow([
@@ -171,7 +176,8 @@ def main():
                     f"{lipo_voltage:.2f}",
                     f"{temperature:.2f}",
                     f"{humidity:.2f}",
-                    f"{pressure:.2f}"
+                    f"{pressure:.2f}",
+                    f"{altitude:}"
                 ])
                 f.flush()
                 os.fsync(f.fileno())
