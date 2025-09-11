@@ -36,6 +36,7 @@ def start():
     sendcmd('2\r\n')
     time.sleep(0.5)
     sendcmd('start\r\n')
+    print("LoRa started Picture transmission is ready!!")
 
 def main():
     start()
@@ -45,9 +46,8 @@ def main():
         while True:
 
             if lr.s.in_waiting > 0:
-                data = lr.read(lr.s.in_waiting)
-                data = data.decode(errors="ignore")   
-                sys.stdout.write(data.decode(errors="ignore"))
+                data = lr.readline(lr.s.in_waiting) 
+                sys.stdout.write(data)
                 sys.stdout.flush()
 
     except KeyboardInterrupt:
