@@ -44,8 +44,8 @@ def main():
     try:
         while True:
 
-            if lr.in_waiting > 0:
-                data = lr.read(lr.in_waiting)
+            if lr.s.in_waiting > 0:
+                data = lr.read(lr.s.in_waiting)
                 data = data.decode(errors="ignore")   
                 sys.stdout.write(data.decode(errors="ignore"))
                 sys.stdout.flush()
