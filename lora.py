@@ -1,6 +1,5 @@
 import serial
 import RPi.GPIO as GPIO
-import struct
 import time
 
 ResetPin = 12
