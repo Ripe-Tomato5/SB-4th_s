@@ -8,7 +8,42 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import Murata
+import smbus2
+import math
+import smbus2
+import time
+import math
 
+# BME280 デフォルト I2C アドレス
+BME280_I2C_ADDR = 0x76
+
+# I2C バス番号（Raspberry Piなら通常1）
+bus = smbus2.SMBus(1)
+
+# BME280 レジスタ
+REG_CTRL_MEAS = 0xF4
+REG_CONFIG = 0xF5
+REG_PRESS_MSB = 0xF7
+REG_TEMP_MSB = 0xFA
+
+# 校正データ取得関数（略）
+def read_calibration_params():
+    calib = {}
+    # BME280の補正データを読み込む
+    # 実際には0x88〜0xA1、0xE1〜0xE7などから読み込みます
+    return calib
+
+# 気圧と温度から高度を計算する関数
+def calc_altitude(pressure, sea_level_pressure=1013.25):
+    """
+    pressure: hPa 単位
+    sea_level_pressure: 海面上気圧 hPa
+    """
+    altitude = 44330 * (1.0 - (pressure / sea_level_pressure) ** (1/5.255))
+    return altitude
+
+
+start_time = time.time()
 lr = lora.LoRa()
 mr = Murata.murata()
 # カメラ初期化
@@ -106,9 +141,16 @@ def camstop():
     picam2.close()
 
 def main():
-
+    elapsed = time.time() - start_time
     try:
-        start()
+        pressure_hPa = 1010.0  # ダミー値、実際はセンサーから読み取る
+        altitude = calc_altitude(pressure_hPa)
+        time.sleep(1)
+
+        while not altitude < 15000 or not elapsed >3600:
+            time.sleep(1)
+            elapsed = time.time() - start_time
+            altitude = calc_altitude(pressure_hPa)
         time.sleep(5)
         royal()
         Murapic()
