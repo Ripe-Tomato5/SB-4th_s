@@ -25,7 +25,7 @@ class LoRa():
             self.s.close()
             self.s.timeout = timeout
             self.s.open()
-        line = self.s.readline()
+        line = self.s.readline().decode(errors="ignore")
         if timeout != None:
             self.s.close()
             self.s.timeout = None
