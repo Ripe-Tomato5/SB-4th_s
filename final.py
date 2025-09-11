@@ -108,7 +108,6 @@ def camstop():
 def main():
 
     try:
-        start()
         time.sleep(5)
         royal()
         Murapic()
