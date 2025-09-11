@@ -45,16 +45,17 @@ def main():
         time.sleep(5)
         while True:
             line = lr.readline()
-            binary_data = base64.b64decode(line)
-            with open("output.jpg", "wb") as f:
-                f.write(binary_data)
-            print("Base64データをバイナリに変換して output.jpg として保存しました。")
-            print("長さ:", len(ascii_data))
-            print("先頭100文字:\n", ascii_data[:5848])  # 一部だけ表示
+            binary_data = binary_data + base64.b64decode(line)
+            
 
     except KeyboardInterrupt:
         print("\nStopped by user")
     finally:
+        with open("output.jpg", "wb") as f:
+            f.write(binary_data)
+        print("Base64データをバイナリに変換して output.jpg として保存しました。")
+        print("長さ:", len(binary_data))
+        print("先頭100文字:\n", binary_data[:5848])  # 一部だけ表示
         lr.close()
 
 if __name__ == "__main__":
