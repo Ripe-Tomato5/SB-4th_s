@@ -2,6 +2,43 @@ from picamera2 import Picamera2
 import time
 import base64
 import cv2
+import lora
+import sys
+
+lr = lora.LoRa()
+
+def sendcmd(cmd):
+    print(cmd)
+    lr.write(cmd)
+    t = time.time()
+    while (True):
+        if (time.time() - t) > 5:
+            print('panic: %s' % cmd)
+            break
+        line = lr.readline()
+        if 'OK' in line:
+            print(line)
+            return True
+        elif 'NG' in line:
+            print(line)
+            return False
+
+
+def start():
+    lr.reset()
+    time.sleep(1.5)
+
+    line = lr.readline()
+    while not ('Mode' in line):
+        lr.reset()
+        line = lr.readline()
+        if len(line) > 0:
+            print(line)
+        time.sleep(0.5)
+    sendcmd('2\r\n')
+    time.sleep(0.5)
+    sendcmd('start\r\n')
+    print("LoRa started Picture transmission is ready!!")
 
 # カメラ初期化
 picam2 = Picamera2()
@@ -22,9 +59,7 @@ input_img = cv2.imread(f"{Picture_name}")
 output_img = cv2.rotate(input_img, cv2.ROTATE_180)
 cv2.imwrite(f"{Picture_name}", output_img)
 
-
-
-# JPEGをバイナリで読み込み 
+# JPEGをバイナリで読み込み
 with open(f"{Picture_name}", "rb") as f:
     binary_data = f.read()
 print("original_data_size:", len(binary_data), "bytes")
